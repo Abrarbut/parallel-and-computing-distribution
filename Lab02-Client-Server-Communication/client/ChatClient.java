@@ -7,23 +7,24 @@ public class ChatClient {
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(socket.getInputStream()));
-        PrintWriter out = new PrintWriter(
-                socket.getOutputStream(), true);
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
         BufferedReader keyboard = new BufferedReader(
                 new InputStreamReader(System.in));
 
+        // Thread to listen for messages from server
         new Thread(() -> {
             try {
                 String msg;
                 while ((msg = in.readLine()) != null) {
                     System.out.println(msg);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IOException e) {
+                System.out.println("Disconnected from server.");
             }
         }).start();
 
+        // Thread to send messages to server
         String input;
         while ((input = keyboard.readLine()) != null) {
             out.println(input);
