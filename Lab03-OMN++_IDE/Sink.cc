@@ -1,0 +1,13 @@
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+class Sink : public cSimpleModule
+{
+protected:
+    virtual void handleMessage(cMessage *msg) override {
+        delete msg;
+    }
+};
+
+Define_Module(Sink);
