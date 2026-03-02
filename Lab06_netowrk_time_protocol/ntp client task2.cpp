@@ -118,11 +118,35 @@ int main()
     }
 
     cout << "=========================================" << endl;
-    cout << "  Lab 06 - NTP Client                   " << endl;
+    cout << "  Lab 06 - NTP Client (10 Servers)       " << endl;
     cout << "=========================================" << endl << endl;
 
-    string server = "pool.ntp.org";
-    GetTimeFromNTPServer(server);
+    // Task 2: Query 10 NTP servers
+    string servers[10] = {
+        "pool.ntp.org",
+        "time.google.com",
+        "time.windows.com",
+        "time.apple.com",
+        "time.cloudflare.com",
+        "0.pool.ntp.org",
+        "1.pool.ntp.org",
+        "2.pool.ntp.org",
+        "3.pool.ntp.org",
+        "ntp.ubuntu.com"
+    };
+
+    int successCount = 0;
+    for (int i = 0; i < 10; i++)
+    {
+        cout << "[" << (i + 1) << "/10] Querying: " << servers[i] << endl;
+        if (GetTimeFromNTPServer(servers[i]))
+            successCount++;
+    }
+
+    cout << endl;
+    cout << "=========================================" << endl;
+    cout << "  Completed: " << successCount << "/10 servers responded." << endl;
+    cout << "=========================================" << endl;
 
     WSACleanup();
 
